@@ -19,10 +19,17 @@ class VideoController extends Controller
 
     public function __construct()
     {
-        // Define o caminho completo para os executáveis dentro da estrutura do Laravel (storage/app/bin)
+        // define o Caminho para os binários caso esteja na pasta Storage/app/bin
+        // para uso somente pela aplicação e não do sistema operaciona
+        //$this->ytDlpPath = storage_path('app/bin/yt-dlp');
+        //$this->ffmpegPath = storage_path('app/bin/ffmpeg');
+
+        // Define o caminho dos executáveis caso esteja no Path do sistema operacional
         // Isso garante que o código funcione em qualquer SO, desde que o binário correto esteja na pasta.
-        $this->ytDlpPath = storage_path('app/bin/yt-dlp');
-        $this->ffmpegPath = storage_path('app/bin/ffmpeg');
+        $ext = (PHP_OS_FAMILY === 'Windows' ? '.exe' : '');
+        
+        $this->ytDlpPath = 'yt-dlp' . $ext;
+        $this->ffmpegPath = 'ffmpeg' . $ext;
         $this->userAgent = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36';
 
         // Lembrete: Para compatibilidade Windows/Linux, você deve garantir que o binário
